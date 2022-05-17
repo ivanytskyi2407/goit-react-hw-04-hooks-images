@@ -19,26 +19,32 @@ const App = () => {
   const [loadMore, setLoadMore] = useState(true);
 
   useEffect(() => {
-    API(query, page).then(pictures => {
-      console.log(pictures);
-      setLoader(true);
-      if (pictures.length > 12) {
-        setLoadMore(true);
-      }
-      if (pictures.length === 0) {
-        return toast.error('Нічого немає');
-      }
-      if (pictures.length < 12) {
-        setLoadMore(false);
-      }
+    setLoader(true);
+    API(query, page)
+      .then(pictures => {
+        if (pictures.length > 12) {
+          setLoadMore(true);
+        }
+        if (pictures.length === 0) {
+          return toast.error('Нічого немає');
+        }
+        if (pictures.length < 12) {
+          setLoadMore(false);
+        }
 
-      setPictures(pictures);
-    });
-    setLoader(false);
-  }, [query]);
+        setPictures(prevState => {
+          [...prevState, ...pictures];
+        });
+      })
+      .finally(() => {
+        setLoader(false);
+      });
+  }, [query, page]);
 
-  const handlFormSubmit = e => {
-    setQuery(e);
+  const handlFormSubmit = query => {
+    setQuery(query);
+    setPage(1);
+    setPictures([]);
   };
   const onClickButton = () => {
     setPage(page => {

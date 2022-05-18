@@ -12,27 +12,31 @@ import Button from './Button/Button';
 import { useState, useEffect } from 'react';
 
 const App = () => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(null);
   const [page, setPage] = useState(1);
   const [pictures, setPictures] = useState([]);
   const [loader, setLoader] = useState(false);
-  const [loadMore, setLoadMore] = useState(true);
+  const [loadMore, setLoadMore] = useState(false);
 
   useEffect(() => {
+    if (!query) {
+      return;
+    }
     setLoader(true);
     API(query, page)
-      .then(pictures => {
-        if (pictures.length < 12) {
+      .then(({ hits, totalHits }) => {
+        console.log(hits);
+        if (hits < 12) {
           setLoadMore(false);
         }
-        if (pictures.length > 12) {
+        if (totalHits > 1) {
           setLoadMore(true);
         }
-        if (pictures.length === 0) {
+        if (hits === 0) {
           return toast.error('Нічого немає');
         }
         setPictures(prevState => {
-          return [...prevState, ...pictures];
+          return [...prevState, ...hits];
         });
       })
       .finally(() => {

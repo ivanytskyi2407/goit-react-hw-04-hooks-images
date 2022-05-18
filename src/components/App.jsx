@@ -12,7 +12,7 @@ import Button from './Button/Button';
 import { useState, useEffect } from 'react';
 
 const App = () => {
-  const [query, setQuery] = useState('Search');
+  const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
   const [pictures, setPictures] = useState([]);
   const [loader, setLoader] = useState(false);

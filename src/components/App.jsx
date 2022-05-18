@@ -55,7 +55,7 @@ const App = () => {
     <div className={s.App}>
       <Searchbar onSubmit={handlFormSubmit} />
       {loader && <Loader />}
-      <ImageGallery pictures={pictures}></ImageGallery>
+      {pictures.length > 0 && <ImageGallery pictures={pictures} />}
       {loadMore && <Button onClickButton={onClickButton} />}
       <ToastContainer autoClose={2000} position="top-center" />
     </div>

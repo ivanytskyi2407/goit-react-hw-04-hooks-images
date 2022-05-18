@@ -22,18 +22,17 @@ const App = () => {
     setLoader(true);
     API(query, page)
       .then(pictures => {
+        if (pictures.length < 12) {
+          setLoadMore(false);
+        }
         if (pictures.length > 12) {
           setLoadMore(true);
         }
         if (pictures.length === 0) {
           return toast.error('Нічого немає');
         }
-        if (pictures.length < 12) {
-          setLoadMore(false);
-        }
-
         setPictures(prevState => {
-          [...prevState, ...pictures];
+          return [...prevState, ...pictures];
         });
       })
       .finally(() => {
@@ -63,7 +62,8 @@ const App = () => {
   );
 };
 export default App;
-// //////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////
 
 // export default class App extends Component {
 //   state = {

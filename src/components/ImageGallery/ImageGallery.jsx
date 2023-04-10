@@ -1,6 +1,5 @@
 import s from './ImageGallery.module.css';
 import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
-// import { Component } from 'react';
 import Modal from '../Modal/Modal';
 import { useState, useEffect } from 'react';
 
@@ -32,9 +31,11 @@ const ImageGallery = ({ pictures }) => {
   return (
     <ul className={s.ImageGallery}>
       <ImageGalleryItem pictures={pictures} showModal={handleModal} />
-      {showModal && (
-        <Modal bigPicture={largeImageURL} closeModal={closeModal} />
-      )}
+      <Modal
+        showModal={showModal}
+        bigPicture={largeImageURL}
+        closeModal={closeModal}
+      />
     </ul>
   );
 };

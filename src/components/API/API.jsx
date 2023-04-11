@@ -8,7 +8,7 @@ export default function API(query, page) {
       `${BASE_URL}/?key=${API_KEY}&q=${query}&image_type=photo&orientation=horizontal&safesearch=true`,
       {
         params: {
-          limit: 12,
+          per_page: 12,
           page,
         },
       }
